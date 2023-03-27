@@ -52,19 +52,48 @@ def staff(request):
     workers_count = workers.count()
     items_count =Issued_Items.objects.all().count()
     product_count =Product.objects.all().count()
-    
+    if request.method=='POST':
+        emailform=sendemailform(request.POST)
+        if emailform.is_valid():
+            name=emailform.cleaned_data['title']
+            toemail=emailform.cleaned_data['empemail']
+            message=emailform.cleaned_data['message']
+            send_mail(name,message,'settings.EMAIL_HOST_USER',[toemail],fail_silently=False)
+            return redirect('dashboardindex')
+    else:
+        emailform=sendemailform()
     context= {
         'workers':workers,
         'workers_count': workers_count,
         'items_count': items_count,
         'product_count': product_count,
+        'emailform':emailform,
     }
     return render(request,'dashboard/staff.html',context)
 @login_required
 def staff_detail(request,pk):
+    worker=User.objects.all()
+    workers_count = worker.count()
+    items_count =Issued_Items.objects.all().count()
+    product_count =Product.objects.all().count()
+    if request.method=='POST':
+        emailform=sendemailform(request.POST)
+        if emailform.is_valid():
+            name=emailform.cleaned_data['title']
+            toemail=emailform.cleaned_data['empemail']
+            message=emailform.cleaned_data['message']
+            send_mail(name,message,'settings.EMAIL_HOST_USER',[toemail],fail_silently=False)
+            return redirect('dashboardindex')
+    else:
+        emailform=sendemailform()
     workers=User.objects.get(id=pk)
     context={
-        'workers':workers
+        'workers':workers,
+        'emailform':emailform,
+        'worker':worker,
+        'workers_count': workers_count,
+        'items_count': items_count,
+        'product_count': product_count,
     }
 
     return render(request,'dashboard/staff_detail.html',context)
@@ -123,24 +152,22 @@ def issued_items(request):
  items_count = items.count()
  workers_count =User.objects.all().count()
  product_count =Product.objects.all().count()
+ if request.method=='POST':
+        emailform=sendemailform(request.POST)
+        if emailform.is_valid():
+            name=emailform.cleaned_data['title']
+            toemail=emailform.cleaned_data['empemail']
+            message=emailform.cleaned_data['message']
+            send_mail(name,message,'settings.EMAIL_HOST_USER',[toemail],fail_silently=False)
+            return redirect('dashboardindex')
+ else:
+    emailform=sendemailform()
  context={
      'items':items,
      'workers_count': workers_count,
      'items_count': items_count,
      'product_count': product_count,
+     'emailform':emailform,
  }
 
  return render(request,'dashboard/issueditems.html',context)
-
-#@login_required
-#def sendemail(request):
- #   if request.method == 'POST':
-  #   emailform=sendemailform(request.POST)
-   #  if emailform.is_valid():
-    #     return redirect('dashboardindex')
-    #else:
-     #   emailform=sendemailform()
-   # context={
-    #    'emailform':emailform
-    #}
-    #return render(request,"dasboard/index.html",context)  
