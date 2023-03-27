@@ -9,3 +9,8 @@ class orderform(forms.ModelForm):
     class Meta:
         model=Issued_Items
         fields=['product','issueditem_quantity']
+
+class sendemailform(forms.Form):
+    title=forms.CharField(label='Title',max_length=250)
+    empemail=forms.EmailField(label='Email id of employee')
+    message=forms.CharField(label='Reminder message',max_length=200)

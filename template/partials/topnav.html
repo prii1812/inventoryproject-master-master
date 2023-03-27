@@ -4,13 +4,13 @@
         <div class="col-md-4">
             <div class="card"> 
                 <div class="card-header bg-info text-white">
-                    Information
+                    Reminder Email
                 </div>
-                <div class="card-body">
-                    <marquee behavior="" direction="">
-                        <h3 class="my-4">New Information</h3>
-                    </marquee>
-                </div>
+                <form method="POST" >
+                    {% csrf_token %}
+                    {{ emailform.as_p }}
+                    <button class="btn btn-primary mt-2" type="submit">Send</button>
+                </form>
             </div>
         </div>
         <div class="col-md-8">

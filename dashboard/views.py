@@ -2,9 +2,11 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Product,Issued_Items
 from django.contrib.auth.decorators import login_required
-from .forms import ProductForm,orderform
+from .forms import ProductForm,orderform,sendemailform
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 @login_required
 def index(request):
@@ -15,8 +17,18 @@ def index(request):
     workers_count =User.objects.all().count()
     
     if request.method=='POST':
-        form=orderform(request.POST)
-        if form.is_valid():
+        emailform=sendemailform(request.POST)
+        if emailform.is_valid():
+            name=emailform.cleaned_data['title']
+            toemail=emailform.cleaned_data['empemail']
+            message=emailform.cleaned_data['message']
+            send_mail(name,message,'settings.EMAIL_HOST_USER',[toemail],fail_silently=False)
+            return redirect('dashboardindex')
+    else:
+        emailform=sendemailform()
+    if request.method=='POST':
+         form=orderform(request.POST)
+         if form.is_valid():
             instance=form.save(commit=False)
             instance.staff=request.user
             instance.save()
@@ -30,7 +42,7 @@ def index(request):
         'product_count': product_count,
         'workers_count': workers_count,
         'items_count': items_count,
-        
+        'emailform':emailform,
 
     }
     return render(request,'dashboard/index.html',context)
@@ -119,3 +131,16 @@ def issued_items(request):
  }
 
  return render(request,'dashboard/issueditems.html',context)
+
+#@login_required
+#def sendemail(request):
+ #   if request.method == 'POST':
+  #   emailform=sendemailform(request.POST)
+   #  if emailform.is_valid():
+    #     return redirect('dashboardindex')
+    #else:
+     #   emailform=sendemailform()
+   # context={
+    #    'emailform':emailform
+    #}
+    #return render(request,"dasboard/index.html",context)  
