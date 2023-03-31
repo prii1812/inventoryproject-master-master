@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+import barcode
+from barcode.writer import ImageWriter
+from io import BytesIO
+from django.core.files import File
 # Create your models here.
 category=(
     ('stationary','stationary'),
@@ -13,12 +17,21 @@ class Product(models.Model):
     category=models.CharField(max_length=20,choices=category,null=True)
     quantity=models.PositiveIntegerField(null=True)
     model=models.CharField(max_length=300,null=True)
+    barcode=models.ImageField(upload_to='images/',null=True)
 
     class Meta:
         verbose_name_plural='Product'
     
     def __str__(self) -> str:
         return f'{self.name}-{self.quantity}'
+    
+    def save(self,*args,**kwargs):
+        EAN=barcode.get_barcode_class('ean13')
+        ean=EAN(f'{self.asset}',writer=ImageWriter())
+        buffer=BytesIO()
+        ean.write(buffer)
+        self.barcode.save('barcode.png',File(buffer),save=False)
+        return super().save(*args,**kwargs)
 
 
 class Issued_Items(models.Model):

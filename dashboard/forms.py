@@ -13,4 +13,4 @@ class orderform(forms.ModelForm):
 class sendemailform(forms.Form):
     title=forms.CharField(label='Title',max_length=250)
     empemail=forms.EmailField(label='Email id of employee')
-    message=forms.CharField(label='Reminder message',max_length=200)
+    message=forms.CharField(widget=forms.Textarea(attrs={"rows":2, "cols":25}))
