@@ -32,6 +32,7 @@ class Product(models.Model):
         ean.write(buffer)
         self.barcode.save('barcode.png',File(buffer),save=False)
         return super().save(*args,**kwargs)
+    
 
 
 class Issued_Items(models.Model):

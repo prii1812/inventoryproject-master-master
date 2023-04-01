@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
     <div class="row mt-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
             {% if messages %}
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }}">
@@ -24,7 +24,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-header bg-info text-white">
                     Statistics
@@ -68,6 +68,7 @@
                         <th scope="col">Category</th>
                         <th scope="col">Quantity</th>
                         <th scope="col">Model</th>
+                        <th scope="col">Barcode</th>
                         <th scope="col">Activity</th>
                     </tr>
                 </thead>
@@ -80,6 +81,7 @@
                         <td>{{ item.category }}</td>
                         <td>{{ item.quantity }}</td>
                         <td>{{ item.model }}</td>
+                        <td><img class="img-thumbnail" src="{{ item.barcode.url }}" alt=""></td>
                         <td>
                             <a class="btn btn-info btn-sm" href="{% url 'dashboard-product-update' item.id %}">Edit</a>
                             <a class="btn btn-danger btn-sm" href="{% url 'dashboard-product-delete' item.id %}">Delete</a>
