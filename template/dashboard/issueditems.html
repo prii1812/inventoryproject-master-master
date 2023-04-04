@@ -1,6 +1,5 @@
 {% extends 'partials/base.html' %}
 {% block title %}Issued items Page{% endblock %}
-
 {% block content %}
 {% include 'partials/topnav.html'%}
 <!--Table-->
@@ -9,7 +8,7 @@
         <div class="col-md-4">
 
         </div>
-        <div class="col-md-8">
+        <div class="col-md-10">
             <table class="table bg-white">
                 <thead class="bg-info">
                     <tr class="text-white">
@@ -18,6 +17,7 @@
                         <th scope="col">Quantity</th>
                         <th scope="col">Issued to</th>
                         <th scope="col">Issued on</th>
+                        <th scope="col">Location</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +32,7 @@
                         <td>
                             {{ items.date }}
                         </td>
+                        <td>{{ items.location }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

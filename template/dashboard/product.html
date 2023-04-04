@@ -69,6 +69,7 @@
                         <th scope="col">Quantity</th>
                         <th scope="col">Model</th>
                         <th scope="col">Barcode</th>
+                        <th scope="col">Price</th>
                         <th scope="col">Activity</th>
                     </tr>
                 </thead>
@@ -82,6 +83,7 @@
                         <td>{{ item.quantity }}</td>
                         <td>{{ item.model }}</td>
                         <td><img class="img-thumbnail" src="{{ item.barcode.url }}" alt=""></td>
+                        <td>{{ item.price }}</td>
                         <td>
                             <a class="btn btn-info btn-sm" href="{% url 'dashboard-product-update' item.id %}">Edit</a>
                             <a class="btn btn-danger btn-sm" href="{% url 'dashboard-product-delete' item.id %}">Delete</a>

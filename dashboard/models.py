@@ -18,6 +18,7 @@ class Product(models.Model):
     quantity=models.PositiveIntegerField(null=True)
     model=models.CharField(max_length=300,null=True)
     barcode=models.ImageField(upload_to='images/',null=True)
+    price=models.PositiveIntegerField(null=True)
 
     class Meta:
         verbose_name_plural='Product'
@@ -40,6 +41,7 @@ class Issued_Items(models.Model):
     staff=models.ForeignKey(User,models.CASCADE,null=True)
     issueditem_quantity=models.PositiveIntegerField(null=True)
     date=models.DateTimeField(auto_now_add=True)
+    location=models.CharField(max_length=50,null=True)
     
     class Meta:
         verbose_name_plural='Issued_Items'

@@ -29,6 +29,7 @@
                                 <th scope="col">Category</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Issued date</th>
+                                <th scope="col">Location</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,6 +40,7 @@
                                 <td>{{ issueditems.product.category }}</td>
                                 <td>{{ issueditems.issueditem_quantity }}</td>
                                 <td>{{ issueditems.date }}</td>
+                                <td>{{ issueditems.location }}</td>
                             </tr>
                             {% endif %}
                             {% endfor %}

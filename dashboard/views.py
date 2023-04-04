@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 # Create your views here.
+
 @login_required
 def index(request):
     issueditems=Issued_Items.objects.all()
@@ -104,7 +105,7 @@ def product(request):
     #items=Product.objects.raw('SELECT * FROM dashboard_product')
     workers_count =User.objects.all().count()
     items_count =Issued_Items.objects.all().count()
-    
+
     if request.method=='POST':
         form=ProductForm(request.POST)
         if form.is_valid():
